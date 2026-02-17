@@ -282,7 +282,7 @@ else
 }
 while($updatepack -ne "")
 {
-    if($retrytimes -eq 3)
+    if($retrytimes -eq 30)
     {
         $upgradingfailed = $true
         break
@@ -372,8 +372,8 @@ while($updatepack -ne "")
     Install-CMSiteUpdate -Name $updatepack.Name -SkipPrerequisiteCheck -Force
     while($updatepack.State -ne 196607 -and $updatepack.State -ne 262143 -and $updatepack.State -ne 196612)
     {
-        ("[$(Get-Date -format "MM/dd/yyyy HH:mm:ss")] Waiting SCCM Upgrade Complete, current pack " + $updatepack.Name + " state is " + ($state.($updatepack.State)) + ", sleep 2 min...") | Out-File -Append $logpath
-        Start-Sleep 120
+        ("[$(Get-Date -format "MM/dd/yyyy HH:mm:ss")] Waiting SCCM Upgrade Complete, current pack " + $updatepack.Name + " state is " + ($state.($updatepack.State)) + ", sleep 3 min...") | Out-File -Append $logpath
+        Start-Sleep 180
         $updatepack = Get-CMSiteUpdate -Fast -Name $updatepack.Name 
     }
     if($updatepack.State -eq 196612)
